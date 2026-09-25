@@ -21,8 +21,11 @@ if [ "$("${PSQL[@]}" "select to_regclass('mdl_config') is not null")" != "t" ]; 
     --summary="Campus Asaka Academy (développement)" \
     --adminuser="${MOODLE_ADMIN_USER}" --adminpass="${MOODLE_ADMIN_PASSWORD}" \
     --adminemail="${MOODLE_ADMIN_EMAIL}" --supportemail="${MOODLE_ADMIN_EMAIL}"
-  as_www php admin/cli/cfg.php --name=theme --set=asaka
+  # Le thème est imposé par $CFG->theme dans config.php : cfg.php refuserait de le modifier.
   as_www php admin/cli/cfg.php --name=registerauth --set=email
+  # Panneau gauche de la page de connexion : sans ce texte, Boost affiche « Welcome to Moodle » et ses statistiques.
+  as_www php admin/cli/cfg.php --name=auth_instructions \
+    --set="<h1 class=\"h2 mb-3\">Bienvenue sur le campus Asaka</h1><p>Formations certifiantes pour les professionnels de l'humanitaire et du développement en Afrique francophone.</p>"
 else
   as_www php admin/cli/upgrade.php --non-interactive
 fi

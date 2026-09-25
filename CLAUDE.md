@@ -58,16 +58,19 @@ Limites de contraste connues : `border` #DCDDE0 (1.4:1, donc label visible oblig
 Commit initial : environnement Docker (`make init`), thème bloc WordPress, thème Moodle en SCSS pur (aucune surcharge de template),
 CI (tokens, lint PHP, JSON), déploiement staging (rsync + `scripts/deploy-staging-post.sh` après CI verte).
 
-Validé hors Docker : lint PHP, JSON/YAML valides, SCSS complet compilé avec Dart Sass (Moodle utilise scssphp : écarts possibles).
-**Jamais lancé en Docker** : le premier `make init` est à faire et à vérifier.
+Validé hors Docker : lint PHP, JSON/YAML valides, SCSS complet compilé avec Dart Sass.
+Premier `make init` fait le 25/09/2026 : installation neuve et redémarrage OK (Moodle 5.2.3+, build 20260916),
+SCSS du thème compilé par scssphp sans erreur, fiche formation WordPress rendue sans notice PHP.
+Page de connexion Moodle : Boost 5.2 affiche « Welcome to Moodle » + statistiques si `$CFG->auth_instructions` est vide ;
+l'entrypoint le renseigne à l'installation (à faire aussi sur le staging).
 
-À surveiller au premier lancement :
+Encore à vérifier (nécessite une session connectée) :
 - Contraste des éléments de la navbar Moodle sombre (notifications, bascule du mode édition, menu utilisateur).
 - Blocs signalés « invalides » dans l'éditeur WordPress sur la fiche formation (le rendu public n'est pas touché).
 
 ## Prochaines étapes
 
-1. `make init`, corriger ce qui casse, capturer la fiche formation et le campus.
+1. Vérifier connecté : navbar Moodle, blocs de la fiche formation dans l'éditeur WordPress.
 2. Écran 4 (page du cours Moodle) : hero ink + carte de progression, index de cours ; décider des onglets Contenu/Devoirs/Ressources/Échanges (non natifs).
 3. Écrans 5 et 6 (leçon, quiz) en SCSS ; écran 8 avec `tool_certificate`.
 4. `mobile.css` pour l'app Moodle officielle (réglage `mobilecssurl`).

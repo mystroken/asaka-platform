@@ -51,6 +51,8 @@ services:
       WP_ADMIN_USER: ${WP_ADMIN_USER}
       WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
       WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+      # L'UID 33 n'a pas de HOME inscriptible : cache (paquets de langue) dans /tmp.
+      WP_CLI_CACHE_DIR: /tmp/wp-cli-cache
     volumes:
       - wp-html:/var/www/html
       - ../wordpress/themes/asaka:/var/www/html/wp-content/themes/asaka

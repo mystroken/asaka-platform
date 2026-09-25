@@ -40,7 +40,8 @@ body { -webkit-font-smoothing: antialiased; }
     border-bottom-color: $asa-ink;
     color: $asa-white;
 
-    .navbar-brand .logo { max-height: 44px; }
+    // Les SVG du logo n'ont qu'un viewBox (pas de taille intrinsèque) : sans hauteur explicite, l'image tombe à 0 px.
+    .navbar-brand .logo { height: 44px; width: auto; max-height: none; }
     .nav-link,
     .btn,
     .icon,
@@ -54,7 +55,12 @@ body { -webkit-font-smoothing: antialiased; }
     .divider { background-color: $asa-ink-line; border-color: $asa-ink-line !important; }
     .navbar-toggler-icon { filter: invert(1); }
     .userpicture, .userinitials { background-color: $asa-primary; color: $asa-white; }
-    .form-check-input:not(:checked) { background-color: $asa-ink-raised; border-color: $asa-ink-line; }
+    // Interrupteur « mode édition » : pastille et bordure claires, sinon invisibles sur ink (WCAG 1.4.11).
+    .form-switch .form-check-input:not(:checked) {
+        --#{$prefix}form-switch-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$asa-on-ink-muted}'/></svg>"))};
+        background-color: $asa-ink-raised;
+        border-color: $asa-on-ink-muted;
+    }
     .dropdown-menu .dropdown-item,
     .dropdown-menu .icon { color: $asa-ink; }
     *:focus-visible { outline-color: $asa-accent; }
@@ -127,6 +133,17 @@ h2, .h2 { letter-spacing: -.4px; }
 // Retire l'image générique de Boost : panneau ink sobre, carte blanche.
 body.pagelayout-login #page .login-layout-left { background-image: none !important; background-color: $asa-ink; }
 body.pagelayout-login #page .login-layout-left::after { content: none !important; }
+// Contenu du panneau : texte de $CFG->auth_instructions. $headings-color (ink) le rendrait invisible sur fond ink.
+.login-layout-left-content {
+    background-color: transparent;
+    color: $asa-on-ink-soft;
+    h1, h2, h3, .h2 { color: $asa-white; }
+    a { color: $asa-white; }
+}
+// Filet de sécurité si auth_instructions est vide : les statistiques de Moodle (500M users…) ne concernent pas Asaka.
+.login-layout-left-content .login-layout-stats,
+.login-layout-left-content > p.mb-4 { display: none; }
+body.pagelayout-login .login-logo img { height: 80px; width: auto; max-width: 100%; }
 body.pagelayout-login .login-container,
 body.pagelayout-login .loginform { border-radius: $asa-radius-lg; }
 
