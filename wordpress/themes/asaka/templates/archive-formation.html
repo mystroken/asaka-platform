@@ -1,0 +1,33 @@
+<!-- wp:template-part {"slug":"header","tagName":"div"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"default"}} -->
+<main class="wp-block-group"><!-- wp:group {"tagName":"section","className":"asa-hero","layout":{"type":"constrained","contentSize":"1200px"}} -->
+<section class="wp-block-group asa-hero"><!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">Catalogue</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"asa-lead"} -->
+<p class="asa-lead">Des formations certifiantes, conçues avec des praticiens du terrain.</p>
+<!-- /wp:paragraph --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","className":"asa-section","layout":{"type":"constrained","contentSize":"1200px"}} -->
+<section class="wp-block-group asa-section"><!-- wp:query {"queryId":2,"query":{"perPage":12,"pages":0,"offset":0,"postType":"formation","order":"desc","orderBy":"date","inherit":true}} -->
+<div class="wp-block-query"><!-- wp:post-template {"className":"asa-course-grid","layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"className":"asa-card asa-course-card","layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group asa-card asa-course-card"><!-- wp:post-title {"isLink":true,"level":3} /-->
+
+<!-- wp:post-excerpt {"excerptLength":22} /--></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph -->
+<p>Aucune formation publiée pour le moment.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query --></section>
+<!-- /wp:group --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"div"} /-->

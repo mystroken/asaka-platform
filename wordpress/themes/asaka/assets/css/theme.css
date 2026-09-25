@@ -1,0 +1,127 @@
+/* Asaka — couche WordPress : relie les blocs natifs aux composants asa-* du design system.
+   Les valeurs viennent de tokens.css (généré) ; aucune couleur en dur ici sauf les masques SVG. */
+
+:root {
+  --asa-icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12.5l2.7 2.7L16 9.8'/%3E%3C/svg%3E");
+  --asa-icon-play: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M10.5 9v6l4.5-3z' fill='black'/%3E%3C/svg%3E");
+  --asa-icon-caret-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+body { background: var(--white); -webkit-font-smoothing: antialiased; }
+.wp-site-blocks { padding-top: 0; padding-bottom: 0; }
+.wp-site-blocks > * { margin-block-start: 0; }
+:where(a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+.screen-reader-text { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Header / drawer ---------- */
+.asa-site-header { position: sticky; top: 0; z-index: 50; }
+.admin-bar .asa-site-header { top: 32px; }
+@media (max-width: 782px) { .admin-bar .asa-site-header { top: 46px; } }
+.asa-drawer[hidden] { display: none; }
+@media (min-width: 901px) { .asa-drawer { display: none !important; } }
+.asa-header__menu [hidden] { display: none; }
+.asa-header__menu span { display: inline-flex; }
+
+/* ---------- Sections ---------- */
+.asa-hero { background: var(--sand); border-bottom: 1px solid var(--sand-line); padding-block: var(--space-4xl); padding-inline: clamp(16px, 4vw, 32px); }
+.asa-section { padding-block: var(--space-5xl) var(--space-6xl); padding-inline: clamp(16px, 4vw, 32px); }
+.asa-hero h1 { margin: 0; font-size: 40px; line-height: 47px; letter-spacing: -0.8px; text-wrap: pretty; }
+.asa-lead { font-size: 17px; line-height: 27px; color: var(--ink); max-width: 62ch; }
+.asa-hero__grid.wp-block-columns, .asa-body-grid.wp-block-columns { column-gap: var(--space-5xl); row-gap: var(--space-4xl); margin: 0; }
+.asa-hero__grid { align-items: flex-start !important; }
+.asa-hero__intro > * + * { margin-block-start: 18px; }
+.asa-hero__subtitle { font-size: 18px !important; line-height: 25px !important; letter-spacing: 0 !important; margin-block-start: var(--space-2xl) !important; }
+
+.asa-breadcrumb { font-size: 13px; line-height: 20px; color: var(--text-muted); margin: 0; }
+.asa-breadcrumb a { color: var(--text-muted); }
+.asa-breadcrumb a:hover { color: var(--ink); }
+p.asa-badge { width: fit-content; margin-block: 0; }
+
+.asa-facts { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-xl); font-size: 14px; line-height: 21px; color: var(--text-muted); }
+.asa-instructor { gap: var(--space-md) !important; align-items: center !important; }
+.asa-instructor p { margin: 0; }
+p.asa-avatar { width: 44px; height: 44px; font-size: 14px; flex: none; }
+.asa-instructor__text { font-size: 14px; line-height: 21px; color: var(--text-muted); }
+.asa-instructor__text strong { color: var(--ink); font-weight: 600; }
+
+/* Liste cochée (ul.wp-block-list.asa-checks) : icône en masque, couleur success */
+.wp-block-list.asa-checks li::before {
+  content: ""; flex: none; width: 19px; height: 19px; margin-top: 1px;
+  background: var(--success); -webkit-mask: var(--asa-icon-check) center / contain no-repeat; mask: var(--asa-icon-check) center / contain no-repeat;
+}
+.asa-checks--grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md) var(--space-xl) !important; font-size: 15px !important; line-height: 23px !important; }
+@media (max-width: 600px) { .asa-checks--grid { grid-template-columns: 1fr; } }
+
+/* ---------- Carte d'inscription ---------- */
+.asa-enrol { position: relative; }
+.asa-enrol .asa-media p { margin: 0; }
+.asa-enrol .asa-card__body > * { margin: 0; }
+.asa-price-switch { display: flex; flex-direction: column; gap: var(--space-lg); }
+.asa-price-switch .asa-meta { margin: 0; }
+.asa-enrol__actions { flex-direction: column; align-items: stretch !important; gap: var(--space-10) !important; }
+.asa-enrol__actions .wp-block-button, .asa-enrol__actions .wp-block-button__link { width: 100%; }
+.asa-enrol__cta .wp-block-button__link { min-height: var(--control-lg); font-size: 16px; }
+.asa-enrol__perks { border-top: 1px solid var(--surface-muted); padding-top: var(--space-lg) !important; }
+
+/* ---------- Boutons natifs → Button du design system ---------- */
+.wp-block-button__link, .wp-element-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
+  min-height: var(--control-md); padding: 0 var(--space-xl) !important;
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  background: var(--accent); color: var(--ink); font: 600 15px/20px var(--font-sans); text-decoration: none;
+}
+.wp-block-button__link:hover { background: #D27B14; color: var(--ink); text-decoration: none; }
+.wp-block-button.is-style-outline > .wp-block-button__link { background: var(--white); color: var(--ink); border: 1px solid var(--ink); }
+.wp-block-button.is-style-outline > .wp-block-button__link:hover { background: var(--surface-subtle); }
+.wp-block-button.is-style-ink > .wp-block-button__link { background: var(--ink); color: var(--white); }
+.wp-block-button.is-style-ink > .wp-block-button__link:hover { background: var(--ink-raised); }
+
+/* ---------- Programme (core/details) → Programme du design system ---------- */
+.asa-body-grid h2 { margin-block: 0 var(--space-lg); }
+.wp-block-details.asa-module { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--white); overflow: hidden; margin-block: 0 var(--space-md); }
+.asa-module > * { margin: 0 !important; }
+.asa-module > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl); background: var(--surface-subtle); font: 600 16px/22px var(--font-sans);
+}
+.asa-module > summary::-webkit-details-marker { display: none; }
+.asa-module > summary::after {
+  content: ""; flex: none; width: 18px; height: 18px; background: var(--text-muted);
+  -webkit-mask: var(--asa-icon-caret-down) center / contain no-repeat; mask: var(--asa-icon-caret-down) center / contain no-repeat; transition: transform .15s;
+}
+.asa-module[open] > summary::after { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .asa-module > summary::after { transition: none; } }
+.asa-module__meta { padding: var(--space-10) var(--space-xl) 0 !important; font-size: 13px; line-height: 20px; color: var(--text-muted); }
+.asa-lessons { list-style: none; padding: var(--space-sm) 0 0 !important; }
+.asa-lessons li { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-14) var(--space-xl); border-top: 1px solid var(--surface-muted); font-size: 14px; line-height: 21px; }
+.asa-lessons li::before {
+  content: ""; flex: none; width: 20px; height: 20px; background: var(--text-subtle);
+  -webkit-mask: var(--asa-icon-play) center / contain no-repeat; mask: var(--asa-icon-play) center / contain no-repeat;
+}
+.asa-lessons li em { margin-left: auto; font-style: normal; font-size: 13px; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.asa-module-more { font-size: 14px; color: var(--primary); font-weight: 500; }
+
+/* ---------- Colonne latérale ---------- */
+.wp-block-quote.asa-review { margin: 0 0 var(--space-lg); padding: var(--space-xl) var(--space-22); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--white); }
+.asa-review p { font-size: 16px; line-height: 26px; margin: 0 0 var(--space-md); }
+.asa-review__score { font-size: 14px !important; color: var(--text-muted); }
+.asa-review__score strong { font-size: 22px; color: var(--ink); font-weight: 600; margin-right: 4px; }
+.asa-review cite { font-size: 13px; line-height: 20px; color: var(--text-muted); font-style: normal; }
+.asa-org { padding: var(--space-xl) var(--space-22); background: var(--primary-soft); border-color: var(--primary-soft); }
+.asa-org > * { margin-block: 0 var(--space-md); }
+.asa-org > :last-child { margin-bottom: 0; }
+.asa-org h3 { font-size: 18px; line-height: 25px; }
+.asa-org p { font-size: 14px; line-height: 21px; }
+
+/* ---------- Catalogue ---------- */
+.asa-course-card { padding: var(--space-xl) var(--space-22); gap: var(--space-sm); height: 100%; }
+.asa-course-card h3 { font-size: 18px; line-height: 25px; margin: 0; }
+.asa-course-card h3 a { color: var(--ink); }
+.asa-course-card .wp-block-post-excerpt { font-size: 14px; line-height: 21px; color: var(--text-muted); margin: 0; }
+@media (max-width: 900px) { .asa-course-grid { grid-template-columns: 1fr !important; } }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 781px) {
+  .asa-hero h1 { font-size: 30px; line-height: 36px; letter-spacing: -0.6px; }
+  .asa-hero { padding-block: var(--space-xl) var(--space-2xl); }
+}

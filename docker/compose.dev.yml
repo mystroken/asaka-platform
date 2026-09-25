@@ -1,0 +1,101 @@
+# Environnement de développement Asaka : site public (WordPress) + campus (Moodle 5.2) + Mailpit.
+# Lancer depuis la racine : make up
+name: asaka
+
+services:
+  wp-db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: ${WP_DB_NAME}
+      MARIADB_USER: ${WP_DB_USER}
+      MARIADB_PASSWORD: ${WP_DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${WP_DB_ROOT_PASSWORD}
+    volumes: [wp-db:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:6.8-php8.3-apache
+    depends_on:
+      wp-db: { condition: service_healthy }
+    ports: ["${WP_PORT}:80"]
+    environment:
+      WORDPRESS_DB_HOST: wp-db
+      WORDPRESS_DB_NAME: ${WP_DB_NAME}
+      WORDPRESS_DB_USER: ${WP_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WP_DB_PASSWORD}
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_ENVIRONMENT_TYPE', 'development' );
+        define( 'ASAKA_CAMPUS_URL', '${MOODLE_URL}' );
+        define( 'WP_HOME', '${WP_URL}' );
+        define( 'WP_SITEURL', '${WP_URL}' );
+    volumes:
+      - wp-html:/var/www/html
+      - ../wordpress/themes/asaka:/var/www/html/wp-content/themes/asaka
+      - ../wordpress/plugins/asaka-core:/var/www/html/wp-content/plugins/asaka-core
+
+  wp-cli:
+    image: wordpress:cli-php8.3
+    profiles: [tools]
+    user: "33:33" # même UID que www-data dans l'image Apache
+    depends_on: [wordpress]
+    environment:
+      WORDPRESS_DB_HOST: wp-db
+      WORDPRESS_DB_NAME: ${WP_DB_NAME}
+      WORDPRESS_DB_USER: ${WP_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WP_DB_PASSWORD}
+      WP_URL: ${WP_URL}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+    volumes:
+      - wp-html:/var/www/html
+      - ../wordpress/themes/asaka:/var/www/html/wp-content/themes/asaka
+      - ../wordpress/plugins/asaka-core:/var/www/html/wp-content/plugins/asaka-core
+      - ../scripts:/scripts:ro
+
+  moodle-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${MOODLE_DB_NAME}
+      POSTGRES_USER: ${MOODLE_DB_USER}
+      POSTGRES_PASSWORD: ${MOODLE_DB_PASSWORD}
+    volumes: [moodle-db:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${MOODLE_DB_USER} -d ${MOODLE_DB_NAME}"]
+      interval: 5s
+      retries: 20
+
+  moodle:
+    build:
+      context: ./moodle
+      args:
+        MOODLE_BRANCH: ${MOODLE_BRANCH}
+    depends_on:
+      moodle-db: { condition: service_healthy }
+    ports: ["${MOODLE_PORT}:80"]
+    environment:
+      MOODLE_URL: ${MOODLE_URL}
+      MOODLE_DB_HOST: moodle-db
+      MOODLE_DB_NAME: ${MOODLE_DB_NAME}
+      MOODLE_DB_USER: ${MOODLE_DB_USER}
+      MOODLE_DB_PASSWORD: ${MOODLE_DB_PASSWORD}
+      MOODLE_ADMIN_USER: ${MOODLE_ADMIN_USER}
+      MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD}
+      MOODLE_ADMIN_EMAIL: ${MOODLE_ADMIN_EMAIL}
+    volumes:
+      - moodledata:/var/www/moodledata
+      - ../moodle/theme/asaka:/var/www/moodle/public/theme/asaka
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["${MAILPIT_PORT}:8025"]
+
+volumes:
+  wp-db:
+  wp-html:
+  moodle-db:
+  moodledata:

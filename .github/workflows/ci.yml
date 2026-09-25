@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Fichiers générés à jour
+        run: node design/build-tokens.mjs --check
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", coverage: none }
+      - name: Lint PHP
+        run: find wordpress moodle -name '*.php' -print0 | xargs -0 -n1 -P4 php -l > /dev/null
+      - name: JSON valides
+        run: for f in $(git ls-files '*.json'); do python3 -m json.tool "$f" > /dev/null || exit 1; done

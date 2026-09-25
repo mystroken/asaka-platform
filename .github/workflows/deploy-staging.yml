@@ -1,0 +1,45 @@
+# Déploiement continu des thèmes et plugins Asaka vers le staging (VPS).
+name: Deploy staging
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: staging
+    env:
+      SSH_TARGET: ${{ secrets.STAGING_SSH_USER }}@${{ secrets.STAGING_SSH_HOST }}
+      BASE: ${{ secrets.STAGING_BASE_DIR }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Préparer SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.STAGING_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.STAGING_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      # Les fichiers générés (theme.json, tokens, polices) sont commités et vérifiés par la CI.
+      - name: Synchroniser le thème Moodle
+        run: rsync -az --delete --chmod=D755,F644 moodle/theme/asaka/ "$SSH_TARGET:$BASE/moodle-plugins/theme/asaka/"
+
+      - name: Synchroniser le thème et le plugin WordPress
+        run: |
+          rsync -az --delete --chmod=D755,F644 wordpress/themes/asaka/ "$SSH_TARGET:$BASE/wp-content/themes/asaka/"
+          rsync -az --delete --chmod=D755,F644 wordpress/plugins/asaka-core/ "$SSH_TARGET:$BASE/wp-content/plugins/asaka-core/"
+
+      - name: Post-déploiement
+        run: ssh "$SSH_TARGET" "BASE=$BASE bash -s" < scripts/deploy-staging-post.sh

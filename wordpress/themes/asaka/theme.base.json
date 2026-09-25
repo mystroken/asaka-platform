@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "useRootPaddingAwareAlignments": true,
+    "layout": { "contentSize": "760px", "wideSize": "1200px" },
+    "color": { "defaultPalette": false, "defaultGradients": false, "defaultDuotone": false, "custom": false, "customGradient": false },
+    "typography": { "defaultFontSizes": false, "fluid": false, "customFontSize": false, "dropCap": false },
+    "spacing": { "defaultSpacingSizes": false, "units": ["px", "rem", "%"] },
+    "shadow": { "defaultPresets": false }
+  },
+  "styles": {
+    "color": { "background": "var(--wp--preset--color--white)", "text": "var(--wp--preset--color--ink)" },
+    "typography": { "fontFamily": "var(--wp--preset--font-family--sans)", "fontSize": "var(--wp--preset--font-size--body)", "lineHeight": "1.534" },
+    "spacing": {
+      "blockGap": "16px",
+      "padding": { "left": "clamp(16px, 4vw, 32px)", "right": "clamp(16px, 4vw, 32px)", "top": "0", "bottom": "0" }
+    },
+    "elements": {
+      "link": {
+        "color": { "text": "var(--wp--preset--color--primary)" },
+        "typography": { "textDecoration": "none" },
+        ":hover": { "color": { "text": "var(--wp--preset--color--primary-strong)" }, "typography": { "textDecoration": "underline" } }
+      },
+      "heading": { "color": { "text": "var(--wp--preset--color--ink)" }, "typography": { "fontWeight": "600" } },
+      "h1": { "typography": { "fontSize": "var(--wp--preset--font-size--display)", "lineHeight": "1.175", "letterSpacing": "-0.8px" } },
+      "h2": { "typography": { "fontSize": "var(--wp--preset--font-size--title-2)", "lineHeight": "1.27", "letterSpacing": "-0.4px" } },
+      "h3": { "typography": { "fontSize": "var(--wp--preset--font-size--title-3)", "lineHeight": "1.4" } },
+      "button": {
+        "color": { "background": "var(--wp--preset--color--accent)", "text": "var(--wp--preset--color--ink)" },
+        "border": { "radius": "8px" },
+        "typography": { "fontWeight": "600", "fontSize": "15px", "lineHeight": "20px" },
+        "spacing": { "padding": { "top": "12px", "bottom": "12px", "left": "20px", "right": "20px" } }
+      }
+    }
+  },
+  "templateParts": [
+    { "name": "header", "title": "En-tête", "area": "header" },
+    { "name": "footer", "title": "Pied de page", "area": "footer" }
+  ]
+}

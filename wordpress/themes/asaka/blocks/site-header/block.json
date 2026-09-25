@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "asaka/site-header",
+  "title": "En-tête Asaka",
+  "category": "theme",
+  "icon": "menu",
+  "description": "Header du site public : logo, navigation, connexion et inscription au campus, menu mobile.",
+  "textdomain": "asaka",
+  "supports": { "html": false, "reusable": false, "multiple": false, "inserter": false },
+  "editorScript": "asaka-blocks-editor",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,134 @@
+// Asaka — surcharges Moodle après Bootstrap et Boost.
+// Règle : on style les classes Moodle existantes, on ne surcharge pas de template tant que le SCSS suffit.
+
+body { -webkit-font-smoothing: antialiased; }
+
+// ---------- Boutons (Button du design system) ----------
+.btn { --#{$prefix}btn-font-weight: 600; }
+.btn-primary {
+    --#{$prefix}btn-color: #{$asa-ink};
+    --#{$prefix}btn-bg: #{$asa-accent};
+    --#{$prefix}btn-border-color: #{$asa-accent};
+    --#{$prefix}btn-hover-color: #{$asa-ink};
+    --#{$prefix}btn-hover-bg: #D27B14;
+    --#{$prefix}btn-hover-border-color: #D27B14;
+    --#{$prefix}btn-active-color: #{$asa-ink};
+    --#{$prefix}btn-active-bg: #{$asa-accent-strong};
+    --#{$prefix}btn-active-border-color: #{$asa-accent-strong};
+    --#{$prefix}btn-disabled-color: #{$asa-ink};
+    --#{$prefix}btn-disabled-bg: #{$asa-accent};
+    --#{$prefix}btn-disabled-border-color: #{$asa-accent};
+    --#{$prefix}btn-focus-shadow-rgb: 43, 122, 120;
+}
+.btn-secondary,
+.btn-outline-secondary {
+    --#{$prefix}btn-color: #{$asa-ink};
+    --#{$prefix}btn-bg: #{$asa-white};
+    --#{$prefix}btn-border-color: #{$asa-ink};
+    --#{$prefix}btn-hover-color: #{$asa-ink};
+    --#{$prefix}btn-hover-bg: #{$asa-surface-subtle};
+    --#{$prefix}btn-hover-border-color: #{$asa-ink};
+    --#{$prefix}btn-active-color: #{$asa-ink};
+    --#{$prefix}btn-active-bg: #{$asa-surface-muted};
+    --#{$prefix}btn-active-border-color: #{$asa-ink};
+}
+.btn:focus-visible { outline: 2px solid $asa-primary; outline-offset: 2px; box-shadow: none; }
+
+// ---------- Navbar campus (Header, variante campus) ----------
+.navbar.fixed-top {
+    background-color: $asa-ink !important;
+    border-bottom-color: $asa-ink;
+    color: $asa-white;
+
+    .navbar-brand .logo { max-height: 44px; }
+    .nav-link,
+    .btn,
+    .icon,
+    .usermenu .login a,
+    .popover-region-toggle,
+    .dropdown-toggle,
+    .editmode-switch-form label { color: $asa-on-ink-muted; }
+    .nav-link:hover,
+    .nav-link:focus,
+    .usermenu .login a:hover { color: $asa-white; background-color: $asa-ink-raised; }
+    .divider { background-color: $asa-ink-line; border-color: $asa-ink-line !important; }
+    .navbar-toggler-icon { filter: invert(1); }
+    .userpicture, .userinitials { background-color: $asa-primary; color: $asa-white; }
+    .form-check-input:not(:checked) { background-color: $asa-ink-raised; border-color: $asa-ink-line; }
+    .dropdown-menu .dropdown-item,
+    .dropdown-menu .icon { color: $asa-ink; }
+    *:focus-visible { outline-color: $asa-accent; }
+}
+.primary-navigation .moremenu .nav-link {
+    color: $asa-on-ink-muted;
+    font-weight: 500;
+    &:hover, &:focus { background-color: $asa-ink-raised; color: $asa-white; }
+    &.active,
+    &.active:hover,
+    &.active:focus {
+        background-color: transparent;
+        color: $asa-white;
+        font-weight: 600;
+        border-bottom-color: $asa-accent;
+    }
+}
+
+// ---------- En-têtes de page ----------
+#page-header h1,
+.page-header-headings h1 { font-size: 34px; line-height: 41px; font-weight: 600; letter-spacing: -.7px; }
+h2, .h2 { letter-spacing: -.4px; }
+
+// ---------- Cartes et tableau de bord ----------
+.card { border-color: $asa-border; }
+.dashboard-card-deck .dashboard-card,
+.course-card { border-radius: $asa-radius-lg; overflow: hidden; }
+.dashboard-card .card-img,
+.dashboard-card .card-img-top { background-color: $asa-primary-soft; }
+.badge.bg-primary, .badge.text-bg-primary { background-color: $asa-primary-soft !important; color: $asa-primary-strong !important; }
+
+// ---------- Progression ----------
+.progress-bar { border-radius: $asa-radius-pill; }
+
+// ---------- Index de cours (Programme du design system) ----------
+.courseindex {
+    .courseindex-section-title { font-weight: 600; }
+    .courseindex-item {
+        border-radius: $asa-radius-md;
+        &.pageitem {
+            background-color: $asa-primary-soft;
+            color: $asa-ink;
+            font-weight: 600;
+            a { color: $asa-ink; }
+            .icon { color: $asa-primary; }
+        }
+        .completioninfo.completion_complete { color: $asa-success; }
+    }
+}
+
+// ---------- Sections de cours ----------
+.course-section {
+    border: 1px solid $asa-border !important;
+    border-radius: $asa-radius-lg;
+    padding: 0 $asa-space-xl;
+    margin-bottom: $asa-space-md;
+    background-color: $asa-white;
+}
+.activity-item { border-radius: $asa-radius-md; }
+.activity-item.hasinfo, .activity-item:not(.activityinline) { border-color: $asa-surface-muted; }
+
+// ---------- Champs ----------
+.form-control,
+.form-select { min-height: $asa-control-md; border-radius: $asa-radius-md; }
+.form-control:focus,
+.form-select:focus { box-shadow: 0 0 0 3px $asa-primary-soft; }
+.form-label, .col-form-label { font-weight: 500; }
+
+// ---------- Connexion ----------
+// Retire l'image générique de Boost : panneau ink sobre, carte blanche.
+body.pagelayout-login #page .login-layout-left { background-image: none !important; background-color: $asa-ink; }
+body.pagelayout-login #page .login-layout-left::after { content: none !important; }
+body.pagelayout-login .login-container,
+body.pagelayout-login .loginform { border-radius: $asa-radius-lg; }
+
+// ---------- Pied de page Moodle ----------
+#page-footer { background-color: $asa-ink; color: $asa-on-ink-soft; a { color: $asa-white; } }

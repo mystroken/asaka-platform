@@ -1,0 +1,51 @@
+// Asaka — variables Bootstrap 5 / Moodle, injectées avant le preset Boost.
+// Toutes les variables du preset sont en !default : celles-ci l'emportent.
+
+// Couleurs de thème
+$primary: $asa-primary;
+$secondary: $asa-surface-muted;
+$success: $asa-success;
+$info: $asa-primary;
+$warning: $asa-accent;
+$danger: $asa-danger;
+$dark: $asa-ink;
+$light: $asa-surface-subtle;
+
+// Corps et liens
+$body-color: $asa-ink;
+$body-bg: $asa-white;
+$link-color: $asa-primary;
+$link-hover-color: $asa-primary-strong;
+$headings-color: $asa-ink;
+$headings-font-weight: 600;
+$font-family-sans-serif: $asa-font-sans;
+$font-weight-bold: 600;
+
+// Formes
+$border-color: $asa-border;
+$border-radius: $asa-radius-md;
+$border-radius-sm: $asa-radius-sm;
+$border-radius-lg: $asa-radius-lg;
+$card-border-radius: $asa-radius-lg;
+$card-border-color: $asa-border;
+
+// Boutons et champs
+$btn-font-weight: 600;
+$btn-padding-x: 1.25rem;
+$input-btn-padding-y: .5rem;
+$input-focus-border-color: $asa-primary;
+
+// Barre de navigation et progression
+$navbar-height: 56px;
+$moremenu-height: 56px;
+$progress-height: 8px;
+$progress-bg: $asa-surface-muted;
+$progress-bar-bg: $asa-accent;
+$progress-border-radius: $asa-radius-pill;
+
+// Dropdowns : survol teinté plutôt que plein bleu
+$dropdown-link-hover-color: $asa-ink;
+$dropdown-link-hover-bg: $asa-primary-soft;
+
+// Page de connexion
+$login-layout-left-bg: $asa-ink;

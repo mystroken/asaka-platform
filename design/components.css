@@ -1,0 +1,154 @@
+/* Asaka Academy — composants de référence (CSS pur, préfixe asa-).
+   Lit les variables de tokens.css. Mêmes classes que le thème WordPress ;
+   le thème Moodle les traduit sur les classes Bootstrap. */
+
+.asa, .asa * { box-sizing: border-box; }
+.asa { font-family: var(--font-sans); color: var(--ink); font-size: 15px; line-height: 23px; -webkit-font-smoothing: antialiased; }
+.asa a { color: inherit; text-decoration: none; }
+.asa-icon { width: 1.25em; height: 1.25em; flex: none; display: inline-block; vertical-align: middle; }
+
+/* ---------- Button ---------- */
+.asa-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
+  height: var(--control-md); padding: 0 var(--space-xl);
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  font: 600 15px/20px var(--font-sans); cursor: pointer; white-space: nowrap;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.asa-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.asa-btn--sm { height: var(--control-sm); padding: 0 var(--space-lg); }
+.asa-btn--lg { height: var(--control-lg); padding: 0 var(--space-2xl); font-size: 16px; }
+.asa-btn--block { display: flex; width: 100%; }
+.asa-btn--accent { background: var(--accent); color: var(--ink); }
+.asa-btn--accent:hover { background: #D27B14; }
+.asa-btn--ink { background: var(--ink); color: var(--white); }
+.asa-btn--ink:hover { background: var(--ink-raised); }
+.asa-btn--outline { background: var(--white); color: var(--ink); border-color: var(--ink); }
+.asa-btn--outline:hover { background: var(--surface-subtle); }
+.asa-btn--ghost { background: transparent; color: var(--ink); }
+.asa-btn--ghost:hover { background: var(--surface-muted); }
+.asa-on-ink .asa-btn--ghost { color: var(--white); }
+.asa-on-ink .asa-btn--ghost:hover { background: var(--ink-raised); }
+.asa-on-ink .asa-btn:focus-visible { outline-color: var(--accent); }
+.asa-btn[disabled], .asa-btn.is-disabled { opacity: .45; cursor: not-allowed; }
+
+/* ---------- Badge ---------- */
+.asa-badge {
+  display: inline-flex; align-items: center; gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-10); border-radius: var(--radius-sm);
+  font: 500 12px/18px var(--font-sans); letter-spacing: .6px; text-transform: uppercase;
+  background: var(--ink); color: var(--white);
+}
+.asa-badge--primary { background: var(--primary-soft); color: var(--primary-strong); }
+.asa-badge--success { background: var(--success-soft); color: var(--success); }
+.asa-badge--neutral { background: var(--surface-muted); color: var(--ink); }
+
+/* ---------- Field ---------- */
+.asa-field { display: flex; flex-direction: column; gap: var(--space-xs); }
+.asa-field__label { font: 500 14px/20px var(--font-sans); color: var(--ink); }
+.asa-field__control {
+  height: var(--control-md); width: 100%; padding: 0 var(--space-14);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  background: var(--white); color: var(--ink); font: 400 15px/20px var(--font-sans);
+}
+.asa-field__control::placeholder { color: var(--text-muted); }
+.asa-field__control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+select.asa-field__control { appearance: none; padding-right: 36px;
+  background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%235D6370' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center / 14px; }
+.asa-field__help { font: 400 13px/20px var(--font-sans); color: var(--text-muted); }
+.asa-field.is-invalid .asa-field__control { border-color: var(--danger); }
+.asa-field.is-invalid .asa-field__help { color: var(--danger); }
+
+/* ---------- Card ---------- */
+.asa-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.asa-card--floating { box-shadow: var(--shadow-card); }
+.asa-card__body { padding: var(--space-22); display: flex; flex-direction: column; gap: var(--space-lg); }
+.asa-divider { height: 1px; background: var(--surface-muted); border: 0; margin: 0; }
+
+/* EnrolCard (carte d'inscription de la fiche formation) */
+.asa-media { aspect-ratio: 16 / 9; background: var(--primary-soft); color: var(--primary-tint);
+  display: flex; align-items: center; justify-content: center; font: 500 12px/18px var(--font-sans); letter-spacing: 1.2px; text-transform: uppercase; }
+.asa-price { display: flex; align-items: baseline; gap: var(--space-10); flex-wrap: wrap; }
+.asa-price__amount { font: 600 36px/43px var(--font-sans); letter-spacing: -.8px; font-variant-numeric: tabular-nums; }
+.asa-price__note { font-size: 14px; color: var(--text-muted); }
+.asa-meta { font-size: 13px; line-height: 20px; color: var(--text-muted); }
+.asa-checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-10); font-size: 14px; line-height: 21px; }
+.asa-checks li { display: flex; gap: var(--space-10); align-items: flex-start; }
+.asa-checks .asa-icon { color: var(--success); width: 19px; height: 19px; }
+.asa-inline-field { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); font-size: 13px; color: var(--text-muted); }
+.asa-inline-field select { height: var(--control-sm); width: auto; font-size: 14px; }
+
+/* ---------- Progress ---------- */
+.asa-progress { display: block; height: 8px; border-radius: var(--radius-pill); background: var(--surface-muted); overflow: hidden; }
+.asa-progress__bar { display: block; height: 100%; background: var(--accent); border-radius: var(--radius-pill); }
+.asa-on-ink .asa-progress { background: var(--ink-line); }
+.asa-progress-card { background: var(--ink-raised); border: 1px solid var(--ink-line); border-radius: var(--radius-lg); padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-14); color: var(--white); }
+.asa-progress-card__head { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; color: var(--on-ink-muted); }
+.asa-progress-card__value { font: 600 22px/28px var(--font-sans); color: var(--white); font-variant-numeric: tabular-nums; }
+.asa-progress-card__note { font-size: 13px; line-height: 20px; color: var(--on-ink-muted); }
+
+/* ---------- Header ---------- */
+.asa-header { height: var(--header-height); display: flex; align-items: center; gap: var(--space-3xl); padding: 0 var(--space-2xl); background: var(--white); border-bottom: 1px solid var(--border); }
+.asa-header__logo img { height: 44px; display: block; }
+.asa-header__nav { display: flex; align-items: stretch; gap: 2px; height: 100%; }
+.asa-header__link { display: inline-flex; align-items: center; padding: 0 var(--space-14); font: 500 15px/20px var(--font-sans); color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.asa-header__link:hover { color: var(--ink); }
+.asa-header__link.is-active { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
+.asa-header__actions { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: var(--space-10); }
+.asa-header__menu { display: none; }
+.asa-avatar { width: 28px; height: 28px; border-radius: var(--radius-pill); background: var(--primary); color: var(--white); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--font-sans); }
+/* variante campus, sur ink */
+.asa-header--campus { background: var(--ink); border-bottom-color: var(--ink); gap: var(--space-lg); }
+.asa-header--campus .asa-header__link { color: var(--on-ink-muted); }
+.asa-header--campus .asa-header__link:hover, .asa-header--campus .asa-header__link.is-active { color: var(--white); }
+/* mobile : nav repliée derrière un bouton menu, tiroir plein écran */
+.asa-header--mobile { padding: 0 var(--space-lg); gap: var(--space-md); }
+.asa-header--mobile .asa-header__nav, .asa-header--mobile .asa-header__actions .asa-btn--ghost { display: none; }
+.asa-header--mobile .asa-header__logo img { height: 40px; }
+.asa-header--mobile .asa-header__menu { display: inline-flex; width: 44px; padding: 0; }
+.asa-drawer { background: var(--white); border-bottom: 1px solid var(--border); padding: var(--space-sm) var(--space-lg) var(--space-xl); display: flex; flex-direction: column; }
+.asa-drawer__link { display: flex; align-items: center; justify-content: space-between; min-height: 48px; font: 500 16px/24px var(--font-sans); color: var(--ink); border-bottom: 1px solid var(--surface-muted); }
+.asa-drawer__link.is-active { font-weight: 600; box-shadow: inset 3px 0 0 var(--accent); padding-left: var(--space-md); }
+.asa-drawer__actions { display: flex; flex-direction: column; gap: var(--space-10); margin-top: var(--space-xl); }
+@media (max-width: 900px) {
+  .asa-header:not(.asa-header--fixed) .asa-header__nav, .asa-header:not(.asa-header--fixed) .asa-header__actions .asa-btn--ghost { display: none; }
+  .asa-header:not(.asa-header--fixed) .asa-header__menu { display: inline-flex; width: 44px; padding: 0; }
+}
+
+/* ---------- Footer ---------- */
+.asa-footer { background: var(--ink); color: var(--on-ink-soft); font-size: 14px; line-height: 21px; }
+.asa-footer__inner { max-width: var(--container-max); margin: 0 auto; padding: var(--space-6xl) var(--space-4xl) var(--space-4xl); }
+.asa-footer__grid { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: var(--space-5xl); }
+.asa-footer__brand img { height: 56px; display: block; margin-bottom: var(--space-md); }
+.asa-footer__brand p { margin: 0; max-width: 320px; color: var(--on-ink-muted); }
+.asa-footer__title { font: 500 12px/18px var(--font-sans); letter-spacing: 1.2px; text-transform: uppercase; color: var(--on-ink-muted); margin: 0 0 var(--space-md); }
+.asa-footer__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-10); }
+.asa-footer__list a { color: var(--white); }
+.asa-footer__list a:hover { color: var(--accent); }
+.asa-footer__pay { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
+.asa-footer__chip { border: 1px solid var(--ink-line); border-radius: var(--radius-sm); padding: var(--space-2xs) var(--space-sm); font-size: 12px; line-height: 18px; color: var(--on-ink-soft); }
+.asa-footer__bottom { margin-top: var(--space-5xl); padding-top: var(--space-xl); border-top: 1px solid var(--ink-line); display: flex; justify-content: space-between; gap: var(--space-lg); flex-wrap: wrap; font-size: 13px; color: var(--on-ink-muted); }
+.asa-footer__bottom nav { display: flex; gap: var(--space-xl); flex-wrap: wrap; }
+.asa-lang { display: inline-flex; border: 1px solid var(--ink-line); border-radius: var(--radius-md); overflow: hidden; }
+.asa-lang a { padding: 2px var(--space-10); color: var(--on-ink-muted); }
+.asa-lang a.is-active { background: var(--ink-raised); color: var(--white); font-weight: 600; }
+@media (max-width: 900px) {
+  .asa-footer__grid { grid-template-columns: 1fr 1fr; gap: var(--space-4xl) var(--space-2xl); }
+  .asa-footer__brand { grid-column: 1 / -1; }
+  .asa-footer__inner { padding: var(--space-5xl) var(--space-xl) var(--space-2xl); }
+}
+
+/* ---------- Programme (modules et leçons) ---------- */
+.asa-module { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--white); overflow: hidden; }
+.asa-module__head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); padding: var(--space-lg) var(--space-xl); background: var(--surface-subtle); }
+.asa-module__title { font: 600 16px/22px var(--font-sans); margin: 0; }
+.asa-module__meta { font-size: 13px; line-height: 20px; color: var(--text-muted); white-space: nowrap; }
+.asa-lesson { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-14) var(--space-xl); border-top: 1px solid var(--surface-muted); font-size: 14px; line-height: 21px; }
+.asa-lesson__icon { width: 20px; height: 20px; color: var(--text-subtle); flex: none; }
+.asa-lesson__title { flex: 1; }
+.asa-lesson__time { font-size: 13px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.asa-lesson.is-done .asa-lesson__icon { color: var(--success); }
+.asa-lesson.is-current { background: var(--primary-soft); }
+.asa-lesson.is-current .asa-lesson__icon { color: var(--primary); }
+.asa-lesson.is-current .asa-lesson__title { font-weight: 600; }
+.asa-lesson.is-current .asa-lesson__time { color: var(--primary-strong); font-weight: 500; }
