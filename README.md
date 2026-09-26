@@ -36,7 +36,8 @@ wordpress/
 moodle/
   theme/asaka/       thème enfant de Boost : tokens → variables Bootstrap 5, SCSS pur
 docker/            environnement de dev (WordPress + MariaDB, Moodle + PostgreSQL 16, Mailpit)
-scripts/           installation WordPress, post-déploiement staging
+  moodle-staging/    image du campus de staging (image Moodle du serveur + thème)
+scripts/           installation WordPress (dev)
 .github/workflows/ CI (tokens, lint) et déploiement staging
 ```
 
@@ -57,5 +58,13 @@ Côté Moodle, le SCSS est recompilé à chaque requête en dev (`themedesignerm
 
 ## Déploiement staging
 
-Chaque push sur `main` qui passe la CI est synchronisé par rsync sur le VPS, puis `scripts/deploy-staging-post.sh` lance l'upgrade Moodle, purge les caches et recharge Apache.
-Secrets GitHub (environnement `staging`) : `STAGING_SSH_HOST`, `STAGING_SSH_USER`, `STAGING_SSH_KEY`, `STAGING_KNOWN_HOSTS`, `STAGING_BASE_DIR`.
+Staging sur le VPS serenihost : campus https://app.masaka-academy.org, site public https://marketing.masaka-academy.org.
+
+Chaque push sur `main` qui passe la CI déclenche `deploy-staging.yml`. GitHub transmet seulement le commit, en SSH, avec une clé restreinte à `/srv/bin/deploy-asaka` (dépôt serenihost-server). Le serveur récupère alors le code et :
+
+- reconstruit l'image `asaka-moodle:staging` (image Moodle du serveur + `moodle/theme/asaka`, voir `docker/moodle-staging/Dockerfile`) si le thème a changé, puis relance Moodle et lance l'upgrade ;
+- copie le thème et le plugin WordPress dans le conteneur `asaka-marketing`.
+
+Premier déploiement : *Actions → Deploy staging → Run workflow* avec « Réglages initiaux » (thème Moodle, URL du campus, permaliens).
+Secrets GitHub (environnement `staging`) : `STAGING_SSH_HOST`, `STAGING_SSH_USER`, `STAGING_SSH_KEY`, `STAGING_KNOWN_HOSTS`.
+Mise en place et retour arrière : `docs/RUNBOOK.md` du dépôt serenihost-server, section « Asaka (staging) ».

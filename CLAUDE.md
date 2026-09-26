@@ -56,13 +56,13 @@ Limites de contraste connues : `border` #DCDDE0 (1.4:1, donc label visible oblig
 ## État actuel
 
 Commit initial : environnement Docker (`make init`), thème bloc WordPress, thème Moodle en SCSS pur (aucune surcharge de template),
-CI (tokens, lint PHP, JSON), déploiement staging (rsync + `scripts/deploy-staging-post.sh` après CI verte).
+CI (tokens, lint PHP, JSON), déploiement staging (voir section Staging).
 
 Validé hors Docker : lint PHP, JSON/YAML valides, SCSS complet compilé avec Dart Sass.
 Premier `make init` fait le 25/09/2026 : installation neuve et redémarrage OK (Moodle 5.2.3+, build 20260916),
 SCSS du thème compilé par scssphp sans erreur, fiche formation WordPress rendue sans notice PHP.
 Page de connexion Moodle : Boost 5.2 affiche « Welcome to Moodle » + statistiques si `$CFG->auth_instructions` est vide ;
-l'entrypoint le renseigne à l'installation (à faire aussi sur le staging).
+l'entrypoint le renseigne à l'installation ; sur le staging, `deploy-asaka --init` le fait.
 
 Encore à vérifier (nécessite une session connectée) :
 - Contraste des éléments de la navbar Moodle sombre (notifications, bascule du mode édition, menu utilisateur).
@@ -81,6 +81,14 @@ D-07 certificat, D-08 hébergement, D-11 Moodle 5.x à faire valider.
 
 ## Staging
 
-VPS Docker (nginx-proxy/acme). Secrets GitHub, environnement `staging` :
-STAGING_SSH_HOST, STAGING_SSH_USER, STAGING_SSH_KEY, STAGING_KNOWN_HOSTS, STAGING_BASE_DIR.
-L'utilisateur de déploiement doit être dédié, avec une clé restreinte (`command=` dans authorized_keys).
+VPS serenihost (dépôt `/Users/mystroken/www/serenihost-server`, déployé dans `/srv`) : nginx-proxy/acme,
+bases partagées (Postgres 16, MariaDB 11.4, Redis). Apps `asaka-moodle` (https://app.masaka-academy.org)
+et `asaka-marketing` (https://marketing.masaka-academy.org). C'est du staging : le domaine définitif sera acheté après le dev.
+
+Déploiement continu : `deploy-staging.yml` envoie seulement le SHA en SSH ; la clé de `asaka-deploy` est restreinte
+(`command=`) à `/srv/bin/deploy-asaka`, qui fait `git fetch` du dépôt, construit `asaka-moodle:staging`
+(`docker/moodle-staging/Dockerfile` : image Moodle du serveur + thème) si le thème change, et copie thème + plugin
+dans le conteneur WordPress. Le thème Moodle doit être dans l'image : l'entrypoint du serveur recopie le code dans
+le volume avec `rsync --delete`. Côté serveur : webroot `/var/www/html`, CLI `moodle <cmd>` dans le conteneur,
+`opcache.validate_timestamps=0`, config Moodle pilotée par variables d'environnement (thème non imposé : réglé par `--init`).
+Secrets GitHub (environnement `staging`) : STAGING_SSH_HOST, STAGING_SSH_USER, STAGING_SSH_KEY, STAGING_KNOWN_HOSTS.
